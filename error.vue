@@ -1,6 +1,6 @@
 <template>
   <div class="relative font-sans" n="green6">
-    <div class="container max-w-200 mx-auto py-10 px-4">
+    <div class="container px-4 py-10 mx-auto max-w-200">
       <h1>{{ error.message }}</h1>
       There was an error 😱
 
@@ -16,9 +16,11 @@
 </template>
 
 <script setup lang="ts">
+
 defineProps({
   error: Object,
 })
 
 const handleError = () => clearError({ redirect: '/' })
 </script>
+

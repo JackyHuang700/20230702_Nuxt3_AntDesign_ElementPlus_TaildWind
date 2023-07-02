@@ -3,6 +3,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   // _runTest = true
   if (_runTest) {
     // https://nuxt.com/docs/api/advanced/hooks
+
     nuxtApp.hook('app:created', () => {
       console.log('🚀 ~ file: lifecycles.ts:6 ~ nuxtApp.hook ~ app:created:')
     })
