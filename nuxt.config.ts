@@ -10,10 +10,10 @@ export default defineNuxtConfig({
     '@element-plus/nuxt',
   ],
   css: ['@/assets/css/tailwind.scss'],
-  plugins: [
-    '@/plugins/antd',
-    '@/plugins/recaptcha.ts'
-  ],
+  // plugins: [
+  //   '@/plugins/antd',
+  //   '@/plugins/recaptcha.ts'
+  // ],
   i18n: {
     defaultLocale: 'zh-TW',
     lazy: true,
