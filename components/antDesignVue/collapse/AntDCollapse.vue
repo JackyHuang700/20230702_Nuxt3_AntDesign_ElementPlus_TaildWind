@@ -66,5 +66,12 @@ export function useAntDCollapse(_data_initConfig?: IAntDCollapse): IAntDCollapse
   return data_init
 }
 </script>
-<style scoped lang="css">
+<style  lang="css">
+.ant-card-bordered.ant-card-bordered{
+  @apply border-solid border-2 border-zinc-200;
+}
+
+.ant-card-head.ant-card-head{
+  @apply border-b-zinc-200 border-b-2;
+}
 </style>

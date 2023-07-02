@@ -5,33 +5,55 @@
       <a-button type="primary"> Primary Button </a-button>
     </section>
     <section class="ant-design-vue">
-      <AntDCollapse v-model:activeKey="collapse_tem.activeKey" v-bind="{ ...collapse_tem.attrs }" v-on="{ ...collapse_tem.on }">
-        <a-collapse-panel key="1">
-          <template #header>
-            This is panel header 1
+      <div class="collapse">
+        <AntDCollapse v-model:activeKey="collapse_tem.activeKey" v-bind="{ ...collapse_tem.attrs }"
+          v-on="{ ...collapse_tem.on }">
+          <a-collapse-panel key="1">
+            <template #header>
+              This is panel header 1
+            </template>
+            <template #default>
+              <p>{{ 'copplse title 1' }}</p>
+            </template>
+          </a-collapse-panel>
+          <a-collapse-panel key="2" :disabled="true">
+            <template #header>
+              This is panel header 2
+            </template>
+            <template #default>
+              <p>{{ 'copplse title 2' }}</p>
+            </template>
+          </a-collapse-panel>
+          <a-collapse-panel key="3">
+            <template #header>
+              This is panel header 3
+            </template>
+            <template #default>
+              <p>{{ 'copplse title 3' }}</p>
+            </template>
+          </a-collapse-panel>
+        </AntDCollapse>
+      </div>
+      <div class="p-4 card">
+        <AntDCard v-bind="{
+          ...card_tem.attrs
+        }" v-on="{
+  ...card_tem.on
+}">
+          <template #title>
+            <!-- FIXME: -->
+            <div>title</div>
+          </template>
+          <template #extra>
+            <!-- FIXME: -->
+            <div>extra</div>
           </template>
           <template #default>
-            <p>{{ 'copplse title 1' }}</p>
+            <!-- FIXME: -->
+            <div>content</div>
           </template>
-        </a-collapse-panel>
-        <a-collapse-panel key="2" :disabled="true">
-          <template #header>
-            This is panel header 2
-          </template>
-          <template #default>
-            <p>{{ 'copplse title 2' }}</p>
-          </template>
-        </a-collapse-panel>
-        <a-collapse-panel key="3" >
-          <template #header>
-            This is panel header 3
-          </template>
-          <template #default>
-            <p>{{ 'copplse title 3' }}</p>
-          </template>
-        </a-collapse-panel>
-      </AntDCollapse>
-
+        </AntDCard>
+      </div>
     </section>
     <section class="element-plus">
       <el-button @click="ElMessage('hello')">button</el-button>
@@ -52,6 +74,7 @@
 import Recaptcha from '@/components/recaptcha/Index.vue'
 // ant-design-vue
 import AntDCollapse, { useAntDCollapse } from '@/components/antDesignVue/collapse/AntDCollapse.vue'
+import AntDCard, { useAntDCard } from '@/components/antDesignVue/card/AntDCard.vue'
 
 // element-plus
 
@@ -67,6 +90,15 @@ const collapse_tem = useAntDCollapse({
   on: {
   }
 })
+
+
+const card_tem = useAntDCard({
+  attrs: {
+    class: '',
+    loading: true,
+  },
+})
+card_tem.attrs.loading = false // FIXME:
 
 </script>
 <style scoped lang="scss"></style>
