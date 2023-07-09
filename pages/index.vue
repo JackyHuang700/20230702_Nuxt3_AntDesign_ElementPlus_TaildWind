@@ -78,6 +78,11 @@
         <Recaptcha />
       </ClientOnly>
     </section>
+    <section class="use-async">
+        <ul>
+    <li v-for="(item, index) in list" :key="index">{{item.name}}</li>
+  </ul>
+    </section>
     <NuxtWelcome />
   </div>
 </template>
@@ -87,6 +92,7 @@ import Recaptcha from '@/components/recaptcha/Index.vue'
 import AntDCollapse, { useAntDCollapse } from '@/components/antDesignVue/collapse/AntDCollapse.vue'
 import AntDCard, { useAntDCard } from '@/components/antDesignVue/card/AntDCard.vue'
 import AntDAnchor, { useAntDComponent } from '@/components/antDesignVue/anchor/AntDAnchor.vue'
+import {useAsync} from '@/composables/useAsync'
 
 // element-plus
 
@@ -119,5 +125,29 @@ const anchor_tem = useAntDComponent({
 anchor_tem.attrs!.getCurrentAnchor = () => {
   return '#components-anchor-basic'
 }
+
+
+function getUsers() {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve([
+        { name: 'foo' },
+        { name: 'bar' },
+        { name: 'baz' }
+      ])
+    }, 1000)
+  })
+}
+
+    const { data: list } = useAsync(
+      () => {
+        return getUsers()
+      },
+      {
+        initialData: []
+      }
+    )
+
+
 </script>
 <style scoped lang="scss"></style>
