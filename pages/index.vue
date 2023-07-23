@@ -70,14 +70,14 @@
             ...table_tem.on,
           }"
         >
-          <!-- FIXME: header插槽，column.key === '' -->
+          <!-- FIXME: header�槽，column.key === '' -->
           <!-- <template #headerCell="{ title, column }">
               <template v-if="column.key === ''">
                 <span class="text-red-500">{{ title }}</span>
               </template>
             </template> -->
           <template #bodyCell="{ column, text, index, record }">
-            <!-- FIXME: body插槽。column.key === '' -->
+            <!-- FIXME: body�槽�column.key === '' -->
             <template v-if="column.key === 'name'">
               <span>
                 {{ text }}
@@ -90,8 +90,8 @@
               </span>
             </template> -->
           </template>
-          <!-- <template #title>Header</template>  FIXME: 用不到需要刪除 -->
-          <!-- <template #footer>Footer</template>   FIXME: 用不到需要刪除 -->
+          <!-- <template #title>Header</template>  FIXME: ���要刪-->
+          <!-- <template #footer>Footer</template>   FIXME: ���要刪-->
         </AntDTable>
       </div>
     </section>
@@ -189,7 +189,7 @@ const table_tem = useAntDTable({
     dataSource: [],
     columns: [],
     pagination: false, // FIXME: pagination
-    // FIXME: rowSelection，若沒有要用checkbox，可以刪除
+    // FIXME: rowSelection，若沒�要用checkbox，可以刪
     rowSelection: {
       checkStrictly: false,
       onChange: (selectedRowKeys: string[], selectedRows: DataType[]) => {
@@ -213,7 +213,7 @@ const table_tem = useAntDTable({
 })
 
 table_tem.attrs.columns = getColumns([
-  // FIXME: dataSource，resizable = 拖曳
+  // FIXME: dataSource，resizable = �曳
   { title: 'Full Name', width: 100, dataIndex: 'name', key: 'name', fixed: 'left', resizable: true, },
 ])
 
