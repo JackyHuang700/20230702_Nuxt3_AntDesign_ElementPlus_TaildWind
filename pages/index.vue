@@ -61,6 +61,39 @@
           <a-anchor-link href="#components-anchor-basic2" title="Basic demo with Target" target="_blank" />
         </AntDAnchor>
       </div>
+      <div class="table p-3">
+        <AntDTable
+          v-bind="{
+            ...table_tem.attrs,
+          }"
+          v-on="{
+            ...table_tem.on,
+          }"
+        >
+          <!-- FIXME: header插槽，column.key === '' -->
+          <!-- <template #headerCell="{ title, column }">
+              <template v-if="column.key === ''">
+                <span class="text-red-500">{{ title }}</span>
+              </template>
+            </template> -->
+          <template #bodyCell="{ column, text, index, record }">
+            <!-- FIXME: body插槽。column.key === '' -->
+            <template v-if="column.key === 'name'">
+              <span>
+                {{ text }}
+              </span>
+            </template>
+            <!-- FIXME: column.key === '' -->
+            <!-- <template v-else-if="column.key === ''">
+              <span>
+                {{ text }}
+              </span>
+            </template> -->
+          </template>
+          <!-- <template #title>Header</template>  FIXME: 用不到需要刪除 -->
+          <!-- <template #footer>Footer</template>   FIXME: 用不到需要刪除 -->
+        </AntDTable>
+      </div>
     </section>
     <section class="element-plus">
       <el-button @click="ElMessage('hello')">button</el-button>
@@ -79,9 +112,9 @@
       </ClientOnly>
     </section>
     <section class="use-async">
-        <ul>
-    <li v-for="(item, index) in list" :key="index">{{item.name}}</li>
-  </ul>
+      <ul>
+        <li v-for="(item, index) in list" :key="index">{{ item.name }}</li>
+      </ul>
     </section>
     <NuxtWelcome />
   </div>
@@ -91,8 +124,9 @@ import Recaptcha from '@/components/recaptcha/Index.vue'
 // ant-design-vue
 import AntDCollapse, { useAntDCollapse } from '@/components/antDesignVue/collapse/AntDCollapse.vue'
 import AntDCard, { useAntDCard } from '@/components/antDesignVue/card/AntDCard.vue'
-import AntDAnchor, { useAntDComponent } from '@/components/antDesignVue/anchor/AntDAnchor.vue'
-import {useAsync} from '@/composables/useAsync'
+import AntDAnchor, { useAntDAnchor } from '@/components/antDesignVue/anchor/AntDAnchor.vue'
+import AntDTable, { useAntDTable, getColumns } from '@/components/antDesignVue/table/AntDTable.vue'
+import { useAsync } from '@/composables/useAsync'
 
 // element-plus
 
@@ -113,12 +147,13 @@ const card_tem = useAntDCard({
 
 card_tem.attrs.loading = false // FIXME:
 
-const anchor_tem = useAntDComponent({
+const anchor_tem = useAntDAnchor({
   attrs: {
     class: '',
     getCurrentAnchor: () => {
       return '#components-anchor-basic'
     },
+    on: {},
   },
 })
 // FIXME:
@@ -126,28 +161,79 @@ anchor_tem.attrs!.getCurrentAnchor = () => {
   return '#components-anchor-basic'
 }
 
-
 function getUsers() {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
-      resolve([
-        { name: 'foo' },
-        { name: 'bar' },
-        { name: 'baz' }
-      ])
+      resolve([{ name: 'foo' }, { name: 'bar' }, { name: 'baz' }])
     }, 1000)
   })
 }
 
-    const { data: list } = useAsync(
-      () => {
-        return getUsers()
+const { data: list } = useAsync(
+  () => {
+    return getUsers()
+  },
+  {
+    initialData: [],
+  }
+)
+
+interface DataType{
+  key: string
+  name: string
+}
+
+const table_tem = useAntDTable({
+  attrs: {
+    class: '',
+    dataSource: [],
+    columns: [],
+    pagination: false, // FIXME: pagination
+    // FIXME: rowSelection，若沒有要用checkbox，可以刪除
+    rowSelection: {
+      checkStrictly: false,
+      onChange: (selectedRowKeys: string[], selectedRows: DataType[]) => {
+        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
       },
-      {
-        initialData: []
-      }
-    )
+      getCheckboxProps: (record: DataType) => ({
+        disabled: record.name === 'Disabled User', // Column configuration not to be checked
+        name: record.name,
+      }),
+      onSelect: (record: DataType, selected: boolean, selectedRows: DataType[]) => {
+        console.log(record, selected, selectedRows)
+      },
+      onSelectAll: (selected: boolean, selectedRows: DataType[], changeRows: DataType[]) => {
+        console.log(selected, selectedRows, changeRows)
+      },
+      onSelectChange: (selectedRowKeys: (string | number)[]) => {
+        console.log('selectedRowKeys changed: ', selectedRowKeys)
+      },
+    },
+  },
+})
 
+table_tem.attrs.columns = getColumns([
+  // FIXME: dataSource，resizable = 拖曳
+  { title: 'Full Name', width: 100, dataIndex: 'name', key: 'name', fixed: 'left', resizable: true, },
+])
 
+table_tem.attrs.dataSource = getDataSource() // FIXME: dataSource
+
+interface IDataItem {
+  key: number
+  name: string
+  age: number
+  // address: string;
+}
+function getDataSource() {
+  return new Array(100).fill(null).map((i) => {
+    return {
+      key: i,
+      name: `Edrward ${i}`,
+      age: i + 32,
+      // address: `London Park no. ${i}`,
+    } as IDataItem
+  })
+}
 </script>
 <style scoped lang="scss"></style>

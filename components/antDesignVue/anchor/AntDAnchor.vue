@@ -29,12 +29,12 @@ interface IAntDAnchor {
     bounds?: AnchorProps['bounds']
   }
   on?: {
-    click: AnchorProps['onClick']
-    change: AnchorProps['onChange']
+    click?: AnchorProps['onClick']
+    change?: AnchorProps['onChange']
   }
 }
 
-export function useAntDComponent(_data_initConfig?: IAntDAnchor): IAntDAnchor {
+export function useAntDAnchor(_data_initConfig?: IAntDAnchor): IAntDAnchor {
   const data_defaultSettings = reactive<IAntDAnchor>({
     attrs: {
       affix: false,
