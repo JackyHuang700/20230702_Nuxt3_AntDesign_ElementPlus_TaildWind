@@ -94,6 +94,21 @@
           <!-- <template #footer>Footer</template>   FIXME: 用不到需要刪除 -->
         </AntDTable>
       </div>
+      <div class="breadcrumb p-3">
+        <AntDBreadcrumb
+          v-bind="{
+            ...tem_breadcrumb.attrs,
+          }"
+          v-on="{
+            ...tem_breadcrumb.on,
+          }"
+        >
+          <a-breadcrumb-item>Home</a-breadcrumb-item>
+          <a-breadcrumb-item><a href="">Application Center</a></a-breadcrumb-item>
+          <a-breadcrumb-item><a href="">Application List</a></a-breadcrumb-item>
+          <a-breadcrumb-item>An Application</a-breadcrumb-item>
+        </AntDBreadcrumb>
+      </div>
     </section>
     <section class="element-plus">
       <el-button @click="ElMessage('hello')">button</el-button>
@@ -126,6 +141,7 @@ import AntDCollapse, { useAntDCollapse } from '@/components/antDesignVue/collaps
 import AntDCard, { useAntDCard } from '@/components/antDesignVue/card/AntDCard.vue'
 import AntDAnchor, { useAntDAnchor } from '@/components/antDesignVue/anchor/AntDAnchor.vue'
 import AntDTable, { useAntDTable, getColumns } from '@/components/antDesignVue/table/AntDTable.vue'
+import AntDBreadcrumb, { useAntDBreadcrumb } from '@/components/antDesignVue/breadcrumb/AntDBreadcrumb.vue'
 import { useAsync } from '@/composables/useAsync'
 
 // element-plus
@@ -178,7 +194,7 @@ const { data: list } = useAsync(
   }
 )
 
-interface DataType{
+interface DataType {
   key: string
   name: string
 }
@@ -188,7 +204,7 @@ const table_tem = useAntDTable({
     class: '',
     dataSource: [],
     columns: [],
-    pagination: false, // FIXME: pagination
+    // pagination: false, // FIXME: pagination
     // FIXME: rowSelection，若沒有要用checkbox，可以刪除
     rowSelection: {
       checkStrictly: false,
@@ -214,7 +230,7 @@ const table_tem = useAntDTable({
 
 table_tem.attrs.columns = getColumns([
   // FIXME: dataSource，resizable = 拖曳
-  { title: 'Full Name', width: 100, dataIndex: 'name', key: 'name', fixed: 'left', resizable: true, },
+  { title: 'Full Name', width: 100, dataIndex: 'name', key: 'name', fixed: 'left', resizable: true },
 ])
 
 table_tem.attrs.dataSource = getDataSource() // FIXME: dataSource
@@ -235,5 +251,17 @@ function getDataSource() {
     } as IDataItem
   })
 }
+
+
+
+const tem_breadcrumb = useAntDBreadcrumb({
+  attrs: {
+    class: '',
+  },
+  on: {
+
+  },
+})
+
 </script>
 <style scoped lang="scss"></style>
