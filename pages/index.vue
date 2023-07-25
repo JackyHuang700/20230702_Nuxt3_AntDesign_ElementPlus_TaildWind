@@ -2,9 +2,21 @@
   <div>
     <h1 class="text-2xl font-bold text-center text-gray-400">ERP BACKEND</h1>
     <section class="ant-design-vue">
+      <div class="p-3 segmented">
+        <AntDSegmented
+          v-model:value="segmented_tem.value"
+          v-bind="{
+            ...segmented_tem.attrs,
+          }"
+          v-on="{
+            ...segmented_tem.on,
+          }"
+        />
+      </div>
+      <div class="p-3 button">
       <a-button type="primary"> Primary Button </a-button>
-    </section>
-    <section class="ant-design-vue">
+
+      </div>
       <div class="collapse">
         <AntDCollapse
           v-model:activeKey="collapse_tem.activeKey"
@@ -61,6 +73,7 @@
           <a-anchor-link href="#components-anchor-basic2" title="Basic demo with Target" target="_blank" />
         </AntDAnchor>
       </div>
+
       <div class="table p-3">
         <AntDTable
           v-bind="{
@@ -94,13 +107,13 @@
           <!-- <template #footer>Footer</template>   FIXME: 用不到需要刪除 -->
         </AntDTable>
       </div>
-      <div class="breadcrumb p-3">
+      <div class="p-3 breadcrumb">
         <AntDBreadcrumb
           v-bind="{
-            ...tem_breadcrumb.attrs,
+            ...breadcrumb_tem.attrs,
           }"
           v-on="{
-            ...tem_breadcrumb.on,
+            ...breadcrumb_tem.on,
           }"
         >
           <a-breadcrumb-item>Home</a-breadcrumb-item>
@@ -142,6 +155,7 @@ import AntDCard, { useAntDCard } from '@/components/antDesignVue/card/AntDCard.v
 import AntDAnchor, { useAntDAnchor } from '@/components/antDesignVue/anchor/AntDAnchor.vue'
 import AntDTable, { useAntDTable, getColumns } from '@/components/antDesignVue/table/AntDTable.vue'
 import AntDBreadcrumb, { useAntDBreadcrumb } from '@/components/antDesignVue/breadcrumb/AntDBreadcrumb.vue'
+import AntDSegmented, { useAntDSegmented } from '@/components/antDesignVue/segmented/AntDSegmented.vue'
 import { useAsync } from '@/composables/useAsync'
 
 // element-plus
@@ -252,16 +266,41 @@ function getDataSource() {
   })
 }
 
-
-
-const tem_breadcrumb = useAntDBreadcrumb({
+const breadcrumb_tem = useAntDBreadcrumb({
+  value: '',
   attrs: {
     class: '',
   },
-  on: {
-
-  },
+  on: {},
 })
 
+const segmented_tem = useAntDSegmented({
+  value: '',
+  attrs: {
+    class: '',
+    options: [
+      // FIXME:
+      {
+        value: '',
+        payload: {
+          src: 'https://joeschmoe.io/api/v1/random',
+          style: { backgroundColor: '#f56aff' },
+        },
+      },
+      {
+        value: 'user1',
+        payload: {
+          src: 'https://joeschmoe.io/api/v1/random',
+          style: { backgroundColor: '#f56a00' },
+        },
+      },
+    ],
+  },
+  on: {
+    change(val) {
+      console.log('🚀 ~ file: index.vue:276 ~ onChange ~ val:', val) // FIXME:
+    },
+  },
+})
 </script>
 <style scoped lang="scss"></style>
