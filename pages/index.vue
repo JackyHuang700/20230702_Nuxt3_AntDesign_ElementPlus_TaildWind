@@ -1,6 +1,19 @@
 <template>
   <div>
     <h1 class="text-2xl font-bold text-center text-gray-400">ERP BACKEND</h1>
+    <section class="view-ui-plus">
+      <div class="split">
+        <ISplit v-model:value="split_tem.value" v-bind="{ ...split_tem.attrs }" v-on="{ ...split_tem.on }">
+          <template #left>
+            <span>Left Pane</span>
+          </template>
+          <template #right>
+            <span>Right Pane</span>
+          </template>
+        </ISplit>
+      </div>
+    </section>
+
     <section class="ant-design-vue">
       <div class="p-3 segmented">
         <AntDSegmented
@@ -14,8 +27,7 @@
         />
       </div>
       <div class="p-3 button">
-      <a-button type="primary"> Primary Button </a-button>
-
+        <a-button type="primary"> Primary Button </a-button>
       </div>
       <div class="collapse">
         <AntDCollapse
@@ -124,6 +136,12 @@
       </div>
     </section>
     <section class="element-plus">
+      <div class="infinite-scroll">
+        <ul v-infinite-scroll="infiniteScroll_tem" class="h-[300px] overflow-auto">
+          <li v-for="i in infiniteScroll_temCount" :key="i">{{ i }}</li>
+        </ul>
+      </div>
+
       <el-button @click="ElMessage('hello')">button</el-button>
       <ElButton :icon="ElIconEditPen" type="success">button</ElButton>
       <LazyElButton type="warning">lazy button</LazyElButton>
@@ -158,7 +176,24 @@ import AntDBreadcrumb, { useAntDBreadcrumb } from '@/components/antDesignVue/bre
 import AntDSegmented, { useAntDSegmented } from '@/components/antDesignVue/segmented/AntDSegmented.vue'
 import { useAsync } from '@/composables/useAsync'
 
+// view-ui-plus
+import ISplit, { useISplit } from '@/components/viewUIPlus/ISplit.vue'
+
+//view-ui-plus
+const split_tem = useISplit({
+  value: 0.5,
+  attrs: {
+    name: 'split_tem',
+    class: '',
+  },
+  on: {},
+})
+
 // element-plus
+const infiniteScroll_temCount = ref(0)
+const infiniteScroll_tem = () => {
+  infiniteScroll_temCount.value += 2
+}
 
 const collapse_tem = useAntDCollapse({
   activeKey: ['1', '3'],
@@ -303,4 +338,20 @@ const segmented_tem = useAntDSegmented({
   },
 })
 </script>
-<style scoped lang="scss"></style>
+<style scoped lang="css">
+.infinite-list {
+  height: 300px;
+}
+/* .infinite-list .infinite-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  background: var(--el-color-primary-light-9);
+  margin: 10px;
+  color: var(--el-color-primary);
+}
+.infinite-list .infinite-list-item + .list-item {
+  margin-top: 10px;
+} */
+</style>
