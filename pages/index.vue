@@ -15,6 +15,15 @@
     </section>
 
     <section class="ant-design-vue">
+      <div class="p-3 statistic ">
+        <AntDStatistic
+          v-bind="{
+            ...statistic_tem.attrs,
+          }"
+        >
+          <template #suffix> <span>/100</span> </template>
+        </AntDStatistic>
+      </div>
       <div class="p-3 segmented">
         <AntDSegmented
           v-model:value="segmented_tem.value"
@@ -174,10 +183,22 @@ import AntDAnchor, { useAntDAnchor } from '@/components/antDesignVue/anchor/AntD
 import AntDTable, { useAntDTable, getColumns } from '@/components/antDesignVue/table/AntDTable.vue'
 import AntDBreadcrumb, { useAntDBreadcrumb } from '@/components/antDesignVue/breadcrumb/AntDBreadcrumb.vue'
 import AntDSegmented, { useAntDSegmented } from '@/components/antDesignVue/segmented/AntDSegmented.vue'
+import AntDStatistic, { useAntDStatistic } from '@/components/antDesignVue/statistic/AntDStatistic.vue'
 import { useAsync } from '@/composables/useAsync'
 
 // view-ui-plus
 import ISplit, { useISplit } from '@/components/viewUIPlus/ISplit.vue'
+
+const statistic_tem = useAntDStatistic({
+  attrs: {
+    name: 'statistic_tem',
+    value: 112893,
+    class: '',
+    title: '(CNY)', // FIXME: 不需要可以刪除
+    precision: 2, // FIXME: 顯示到第幾位
+    valueStyle: { color: '#3f8600' }, // FIXME: 數字顏色
+  },
+})
 
 //view-ui-plus
 const split_tem = useISplit({
